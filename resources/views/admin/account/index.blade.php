@@ -1,0 +1,281 @@
+@extends('welcome')
+@section('title','SELLS-ERP:Bank')
+@push('css')
+ <link rel="stylesheet" href="{{asset('backend/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('backend/bower_components/select2/dist/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('backend/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+@endpush
+@section('content')
+   <div class="box">
+           <div class="box-header">
+              <h3 class="box-title">All Account</h3>
+               <p> <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-loan">
+                Add New Account
+              </button></p>
+            </div>
+              @if(session('msg'))
+                  <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="material-icons">close</i>
+                    </button>
+                    <span>
+                      <b> Success - </b> {{session('msg')}}</span>
+                  </div>
+                  @endif
+                 
+
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                 <th>Serial</th>
+                  <th>A/C Name</th>
+                  <th>Root Number</th>
+                  <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+@foreach($account as $key=> $all)
+    <tr>
+      <td>{{$key+1}}</td>
+      <td>{{$all->acc_name}}</td>
+      <td>{{$all->root_acc}}</td>
+  
+      <td>
+       <a href="" class="btn btn-info edit-acc" data-toggle="modal" data-target="#modal-bank" acc_id="{{$all->id}}">Edit</a>
+          <button class="btn btn-danger" onclick="deleteTag(<?php echo $all->id ?>)"><i class="material-icons">delete</i></button>
+        <form id="delete-form-{{$all->id}}" action="{{route('admin.account.delete',$all->id)}}" method="post" style="display: none"> {{csrf_field()}}</form>
+      </td>
+    </tr>
+
+@endforeach                
+
+            </tbody>
+                <tfoot>
+                <tr>
+                  <th>Serial</th>
+                  <th>A/C Name</th>
+                  <th>Root Number</th>
+                  <th>Action</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!--  -->
+           <div class="modal fade" id="modal-loan">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Bank</h4>
+              </div>
+              <div class="modal-body">
+              <div class="box-body">
+
+              <form role="form" action="{{route('admin.account.store')}}" method="post" enctype="multipart/form-data">
+                {{@csrf_field()}}
+                <!-- text input -->
+
+                  <div class="form-group">
+                  <label>Account Name *</label>
+                    <input type="text" name="acc_name" class="form-control" placeholder="Enter Account Name" required>
+                </div>
+
+                  <div class="form-group">
+                  <label>Root Account*</label>
+                   <select class="form-control select2" name="root_acc" id="root_acc" style="width: 100%;">
+                    <option value="">Select Root</option>
+                    <option value="customer">Customer</option>
+                    <option value="supplier">Supplier</option>
+                    <option value="office">Office</option>
+                    <option value="loan">Loan</option>
+
+
+                   </select>
+                 
+                </div>
+
+
+            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+          </div>
+            <!-- /.modal-content -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+          <!-- /.modal-dialog -->
+
+
+
+          <!-- Edit -->
+
+     <div class="modal fade" id="modal-bank">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Bank</h4>
+              </div>
+              <div class="modal-body">
+              <div class="box-body">
+
+         <form role="form" action="{{route('admin.account.acupdate')}}" method="post" enctype="multipart/form-data">
+                {{@csrf_field()}}
+                <!-- text input -->
+
+                  <div class="form-group">
+                  <label>Account Name *</label>
+                  <input type="hidden" id="id" name="hidden">
+                    <input type="text" name="acc_name" id="acc_name" class="form-control" placeholder="Enter Account Name" required>
+                </div>
+
+                  <div class="form-group" id="dropdown" >
+                  <label>Root Account*</label>
+                   <select class="form-control select2" name="root_acc"  style="width: 100%;">
+
+
+                   </select>
+                 
+                </div>
+
+
+            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+          </div>
+            <!-- /.modal-content -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>   
+
+   </div>
+@endsection
+@push('js')
+<script src="{{asset('backend/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('backend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('backend/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+ <script src="{{asset('backend/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+     <script>
+function deleteTag(id){
+
+  const swalWithBootstrapButtons = Swal.mixin({
+  confirmButtonClass: 'btn btn-success',
+  cancelButtonClass: 'btn btn-danger',
+  buttonsStyling: false,
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.value) {
+       swalWithBootstrapButtons.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+
+    )
+   event.preventDefault();
+   var a= document.getElementById('delete-form-'+id).submit();
+ 
+
+  } else if (
+    // Read more about handling dismissals
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your Data is safe :)',
+      'error'
+    )
+  }
+})
+         }
+     </script>
+  <script>
+   $('#datepicker').datepicker({
+      autoclose: true,
+      todayHighlight: true
+    })
+   $('.select2').select2();
+ </script>
+   <script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
+<script>
+  $(".edit-acc").click(function(){
+
+    var acc_id =$(this).attr('acc_id');
+
+    
+    $.ajax({
+
+      type: 'POST',
+      url: "{{URL::to('/admin/account/acc-edit')}}",
+      data : {acc_id:acc_id},
+      dateType: 'json',
+      success: function(data){
+       $("#id").val(data.id);
+       $("#acc_name").val(data.acc_name);
+       
+
+
+                  
+               }
+              
+            });
+
+        $.ajax({
+
+              type: 'POST',
+              url: "{{URL::to('/admin/account/dropdown')}}",
+              data : {acc_id:acc_id},
+              dateType: 'text',
+              success: function(data){
+                  $("#dropdown").html(data);
+                    $("#dropdown").find('.select2').select2();
+               }
+              
+            });
+  });
+</script>
+@endpush

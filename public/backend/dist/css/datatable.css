@@ -1,0 +1,75 @@
+button.dt-button, div.dt-button, a.dt-button{
+    border: none;
+    padding: 1px 2px 1px;
+    background: #607D8B;
+    color:white;
+    width: 50px;
+}
+button.dt-button:hover:not(.disabled), div.dt-button:hover:not(.disabled), a.dt-button:hover:not(.disabled) {
+     border: none;
+    padding: 1px 2px 1px;
+    background: #607D8B;
+    color:white;
+    width: 50px;
+}
+/*.dataTables_wrapper .dataTables_length{
+  display: none;
+}
+table.dataTable {
+    border-collapse: 0px;
+}
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 2px solid black;
+}
+.table-bordered th, .table-bordered td {
+     border:none; 
+}
+.table thead th {
+
+    border-top: 2px solid black;
+    
+}
+table.dataTable.no-footer {
+border: none;
+}
+.dataTables_wrapper select {
+width: 50px;
+border: none;
+}
+.dataTables_wrapper input {
+     border: 2px solid gray;
+    border-left: 5px !important; 
+    border-right: 5px !important; 
+    border-top: 5px !important; 
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    background: lightblue;
+    width: 60px;
+    border-color: lightblue;
+    border-radius: 5px;
+}
+
+  .bootstrap-select.btn-group .dropdown-menu li a span.text {
+    display: block;
+    padding-left: 5%;
+    color:black;
+  }
+
+   .bootstrap-select.btn-group .dropdown-menu li a span.text:hover,
+   .bootstrap-select.btn-group .dropdown-menu li a span.text:focus, .bootstrap-select.btn-group .dropdown-menu li a span.text:active {
+    background: gray;}
+    
+
+.table th, .table td {
+    padding: 0.75rem;
+}
+.popover {
+  background-color:  #E91E63;
+}
+
+.popover.popover-top, .popover.bs-tether-element-attached-bottom {
+  margin-top: 0px;
+}
+.popover.popover-top::after, .popover.bs-tether-element-attached-bottom::after {
+  border-top-color: #E91E63;
+}*/
